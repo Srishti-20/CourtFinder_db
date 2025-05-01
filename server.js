@@ -3,16 +3,33 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import courtRoutes from "./routes/courts.js";
-dotenv.config();
 
+dotenv.config();
 const app = express();
+
 const PORT = process.env.PORT || 5001;
 
+const allowedOrigins = [
+  'https://srishti-20.github.io', // GitHub Pages
+  'http://localhost:3000'         // React local dev server
+];
+
 app.use(cors({
-  origin: '*', // Allow all origins for testing purposes
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   methods: ['GET', 'POST', 'PATCH', 'PUT'],
 }));
+
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use("/api/courts", courtRoutes); // Route prefix
 
