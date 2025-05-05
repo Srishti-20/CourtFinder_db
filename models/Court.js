@@ -10,6 +10,7 @@ const courtSchema = new mongoose.Schema({
   Lighting: String,
   "Court Type": String,
   "Court Purpose": String,
+  "Booking Link": String,
 }, { collection: "Details", versionKey: false });
 
 courtSchema.index({ SN: 1 }, { unique: true });

@@ -20,7 +20,7 @@ router.patch("/:id", async (req, res) => {
     // Only update the BookingLink if it's being passed in the body
     const updated = await Court.findByIdAndUpdate(
       req.params.id,
-      { $set: { BookingLink: req.body.BookingLink } },
+      { $set: { "Booking Link": req.body["Booking Link"] } },
       { new: true }
     );
     
